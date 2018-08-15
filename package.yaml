@@ -1,0 +1,30 @@
+name:        local-xmonad
+version:     0.1.0.0
+synopsis:    XMonad with user configuration that uses Stack for compilation.
+description: See README.md for more details.
+author:      Michael Faille
+maintainer:  michael@faille.io
+copyright:   (c) 2018 Michael Faille
+license:     GPL-3
+category:    System
+#github:
+
+extra-source-files:
+  - ChangeLog.md
+  - README.md
+
+dependencies:
+  - base >=4.10
+  - containers >=0.5
+  - text
+  - xmonad >=0.14
+  - xmonad-contrib >=0.14
+  # - intero
+
+ghc-options: -Wall
+
+executables:
+  # This is the executable that XMonad expects to find in its config directory.
+  xmonad-x86_64-linux:
+    source-dirs: app/xmonad/
+    main: Main.hs
