@@ -162,12 +162,6 @@ myManageHook = composeAll
 
 toggleSP sp = namedScratchpadAction myScratchpads sp
 
-spTerminal :: String -> String -> String -> String
-spTerminal f a c    = myTerminal
-                        ++ " -fn " ++ show f ++ " -fb " ++ show f
-                        ++ " -fi " ++ show f ++ " -fbi " ++ show f
-                        ++ " +sb " ++ " -b 15 " ++ a ++ " -e " ++ c
-
 myScratchpads =
     [
       NS "spotify"      "spotify" (className =? "Spotify") centWinVBig
