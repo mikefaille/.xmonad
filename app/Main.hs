@@ -19,43 +19,28 @@ import Data.Ratio()
 import XMonad.Hooks.DynamicLog
 import XMonad.Util.NamedScratchpad()
 
-import XMonad-- (xmonad, modMask, mod1Mask, mod4Mask, xK_b )
-import XMonad.Core()
+import XMonad
+
 import XMonad.Hooks.ManageDocks
-import XMonad.ManageHook()
+
 
 import XMonad.Util.EZConfig        -- append key/mouse bindings
 import XMonad.Actions.CycleWS
 
 import XMonad.Layout(Tall)
 import XMonad.Layout.Grid
-import XMonad.Layout.LayoutModifier()
-import XMonad.Layout.Named()
+
 import XMonad.Layout.NoBorders
-import XMonad.Layout.PerWorkspace()
-import XMonad.Layout.Reflect()
-import XMonad.Layout.TwoPane()
-import XMonad.Layout.WindowNavigation()
-import XMonad.Layout.Circle()
-import XMonad.Layout.MosaicAlt()
-import XMonad.Layout.Spiral()
+
 import XMonad.Actions.GridSelect
-
-import System.Environment()
-
-import XMonad.Operations()
-
 
 import XMonad.Actions.SpawnOn
 import XMonad.Hooks.SetWMName
-
-
 
 import qualified XMonad.StackSet as W
 import XMonad.Hooks.ManageHelpers
 
 import XMonad.Layout.Magnifier
-import XMonad.Actions.UpdatePointer()
 
 import XMonad.Layout.AutoMaster
 
@@ -69,15 +54,7 @@ import XMonad.Hooks.UrgencyHook
 import XMonad.Util.NamedWindows
 import XMonad.Util.Run
 
--- https://hackage.haskell.org/package/xmonad-contrib-0.14/docs/XMonad-Actions-TreeSelect.html
-import Data.Tree
 import XMonad.Hooks.WorkspaceHistory
-
-
-
-import XMonad.Util.SpawnNamedPipe()
-import Data.Maybe()
-
 
 
 data LibNotifyUrgencyHook = LibNotifyUrgencyHook deriving (Read, Show)
@@ -239,7 +216,7 @@ myConfig =  def {
         [ ((controlMask .|. altMask, xK_l), spawn "env XSECURELOCK_SAVER=saver_mpv xsecurelock || slock")                             -- lock screen
         , ((controlMask, xK_Print)        , spawn "sleep 0.2; cd Pictures/scrot; scrot -s")               -- screenshot
         , ((0, xK_Print)                  , spawn "cd Pictures/scrot; scrot")                             -- screenshot
-        , ((mod4Mask, xK_o)               , spawn "dmenu_run")                         -- dmenu
+        , ((mod4Mask, xK_o)               , spawn "rofi -dpi 200 -show run")                         -- dmenu
         , ((altMask, xK_Shift_L)          , spawn "/home/mikefaille/bin/layout-switch.sh") -- chan9ge layout
         , ((mod4Mask, xK_Left  ), prevWS)
         , ((mod4Mask, xK_Right ), nextWS)
