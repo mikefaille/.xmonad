@@ -3,4 +3,4 @@
 set -e
 
 stack build --verbosity error
-stack install  --local-bin-path ~/.local/bin/ --verbosity error
+stack install  --local-bin-path ~/.xmonad/ --verbosity error
