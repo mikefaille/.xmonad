@@ -84,10 +84,8 @@ myStartupHook = setWMName "LG3D"
                 >> spawn "xss-lock -n /usr/lib/xsecurelock/dimmer -l -- env XSECURELOCK_SAVER=saver_mpv xsecurelock"
                 >> spawn "xinput set-prop  'libinput Accel Speed' 1"
                 >> spawn "sleep 1; systemctl --user daemon-reload & systemctl --user start emacs"
-
-                >> spawn "killall blueman-applet & blueman-applet"
-
-
+                -- TODO it don't work for now but fix it
+                -- >> spawn "killall blueman-applet && blueman-applet"
 
 -- the main function.
 main :: IO ()
