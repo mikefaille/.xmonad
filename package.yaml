@@ -9,9 +9,9 @@ license:     GPL-3
 category:    System
 #github:
 
-extra-source-files:
-  - ChangeLog.md
-  - README.md
+# extra-source-files:
+#   - ChangeLog.md
+#   - README.md
 
 dependencies:
   - base >=4.10
