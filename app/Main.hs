@@ -56,6 +56,8 @@ import XMonad.Util.Run
 
 import XMonad.Hooks.WorkspaceHistory
 
+import           XMonad.Util.NamedScratchpad                    -- summon/dismiss running app windows
+
 
 data LibNotifyUrgencyHook = LibNotifyUrgencyHook deriving (Read, Show)
 instance UrgencyHook LibNotifyUrgencyHook where
@@ -107,7 +109,12 @@ myXmobarPP  = xmobarPP {
                , ppLayout  = wrap "" "" . xmobarColor "DarkOrange" "" . wrap " [" "] "
                , ppTitle   = xmobarColor "#61ce3c" "" . shorten 50
                , ppSep     = ""
-               , ppWsSep   = " "}
+               , ppWsSep   = " "
+               , ppSort    = fmap
+                               (namedScratchpadFilterOutWorkspace.)
+                               (ppSort defaultPP)
+
+               }
 
 
 toggleStrutsKey :: XConfig l -> (KeyMask, KeySym)
@@ -141,12 +148,41 @@ myManageHook = composeAll
     , className =? "virt-manager"     --> doShift "4:vm"
     , className =? "qemu-system-x86_64" --> doShift "6:vm"
     , className =? "Xchat"          --> doShift "5:media"
-    -- , className =? "stalonetray"    --> doIgnore
+    , className =? "stalonetray"    --> doIgnore
     , className =? "Spotify"        --> doShift "5:media"
     , title =? "Spotify"        --> doShift "5:media"
     , isFullscreen --> (doF W.focusDown <+> doFullFloat)]
     <+> manageScratchPad
+    <+> namedScratchpadManageHook myScratchpads
     where unfloat = ask >>= doF . W.sink
+
+
+---- Scratchpad ----
+-- src: https://github.com/altercation/es-etc/blob/master/xorg/.xmonad/xmonad.hs
+
+toggleSP sp = namedScratchpadAction myScratchpads sp
+
+spTerminal :: String -> String -> String -> String
+spTerminal f a c    = myTerminal
+                        ++ " -fn " ++ show f ++ " -fb " ++ show f
+                        ++ " -fi " ++ show f ++ " -fbi " ++ show f
+                        ++ " +sb " ++ " -b 15 " ++ a ++ " -e " ++ c
+
+myScratchpads =
+    [
+      NS "spotify"      "spotify" (className =? "Spotify") centWinVBig
+    , NS "mixer"        "pavucontrol" (className =? "Pavucontrol") centWinBig
+
+    ] where
+        -- order of ratios: left-margin top-margin width height
+        centWin     = (customFloating $ W.RationalRect (1/6) (1/6) (2/3) (2/3))
+        centWinBig  = (customFloating $ W.RationalRect (1/8) (1/8) (3/4) (3/4))
+        centWinVBig = (customFloating $ W.RationalRect (1/40) (1/20) (19/20) (9/10))
+        centWinMax  = (customFloating $ W.RationalRect (0/1) (0/1) (1/1) (1/1))
+        centWinThin = (customFloating $ W.RationalRect (1/30) (1/4) (28/30) (1/2))
+        centSquare  = (customFloating $ W.RationalRect (1/3) (1/4) (1/3) (1/2))
+        lowerThird  = (customFloating $ W.RationalRect (0) (2/3) (1) (1/3))
+
 
 -- then define your scratchpad management separately:
 manageScratchPad :: ManageHook
@@ -230,5 +266,8 @@ myConfig =  def {
         , ((mod4Mask .|. controlMask              , xK_m    ), sendMessage Toggle     )
 
         , ((mod4Mask .|. controlMask               , xK_n    ),   scratchpadSpawnActionTerminal myTerminal   )
+        , ((mod4Mask          , xK_s        ), toggleSP "spotify")
+        , ((mod4Mask          , xK_m        ), toggleSP "mixer")
+
 
         ]
