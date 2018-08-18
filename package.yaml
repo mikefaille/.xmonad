@@ -26,5 +26,5 @@ ghc-options: -Wall
 executables:
   # This is the executable that XMonad expects to find in its config directory.
   xmonad-x86_64-linux:
-    source-dirs: app/xmonad/
+    source-dirs: app
     main: Main.hs
