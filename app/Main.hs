@@ -17,7 +17,6 @@ import Data.Ratio()
 
 -- import XMonad
 import XMonad.Hooks.DynamicLog
-import XMonad.Util.NamedScratchpad()
 
 import XMonad
 
