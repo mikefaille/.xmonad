@@ -86,6 +86,7 @@ myStartupHook = setWMName "LG3D"
                 >> spawn "xinput set-prop  'libinput Accel Speed' 1"
                 >> spawn "sleep 1; systemctl --user daemon-reload & systemctl --user start emacs"
                 -- TODO it don't work for now but fix it
+                >> spawn "systemctl --user daemon-reload && sleep 1 systemctl --user start emacs"
                 -- >> spawn "killall blueman-applet && blueman-applet"
 
 -- the main function.
