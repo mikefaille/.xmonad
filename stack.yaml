@@ -58,6 +58,8 @@ extra-deps:
   - alsa-mixer-0.2.0.3
   - iwlib-0.1.0
 
+  - git: https://github.com/mikefaille/filesystem-trees.git
+    commit: 989f830
 flags:
   xmobar:
     all_extensions: true

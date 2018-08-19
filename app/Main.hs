@@ -15,6 +15,9 @@ import qualified Data.Map        as M()
 import Data.Ratio()
 
 
+import System.Directory
+
+
 -- import XMonad
 import XMonad.Hooks.DynamicLog
 
@@ -57,6 +60,10 @@ import XMonad.Hooks.WorkspaceHistory
 
 import           XMonad.Util.NamedScratchpad                    -- summon/dismiss running app windows
 
+import System.Environment
+import System.File.Tree (getDirectory, copyTo_)
+
+import XMonad.Util.Cursor -- configure cursor on startuphook
 
 data LibNotifyUrgencyHook = LibNotifyUrgencyHook deriving (Read, Show)
 instance UrgencyHook LibNotifyUrgencyHook where
@@ -73,11 +80,12 @@ myStartupHook = setWMName "LG3D"
                 >> spawn "killall compton; compton -CG  --backend glx --vsync opengl-swc --paint-on-overlay"
                 >> spawn "setxkbmap ca multi"
                 >> spawn "xset s blank && xset s 180 && xset dpms 0 360 420" -- Set screen blank after 3 min, turn off after 6 min. and suspend after 7 min.
-                >> spawn "xrdb -load ~/.Xresources" -- load .Xresources. I mainly want solarized dark as solarized theme.
+                -- >> createDir
+                >> spawn "xrdb -merge ~/.Xresources" -- load .Xresources. I mainly want solarized dark as solarized theme.
                 >> spawn "fcitx-autostart"
                 >> spawn "nm-applet"
-                >> spawn "xsetroot -xcf /usr/share/icons/DMZ-Black/cursors/left_ptr 80"
-                >> spawn "xrandr --dpi 300"
+                >> spawn "xsetroot -xcf ~/.xmonad/res/icons/DMZ-Black/cursors/left_ptr 200"
+                >> spawn "xrandr --dpi 221"
                 >> spawn "xrandr --output DP-0 --scale 1x1"
                 >> spawn "xinput --set-prop 'SynPS/2 Synaptics TouchPad' 'libinput Natural Scrolling Enabled' '1'"
                 >> spawnHere "killall stalonetray; stalonetray"
@@ -87,6 +95,16 @@ myStartupHook = setWMName "LG3D"
                 >> spawn "sleep 1; systemctl --user daemon-reload & systemctl --user start emacs"
                 -- TODO it don't work for now but fix it
                 >> spawn "systemctl --user daemon-reload && sleep 1 systemctl --user start emacs"
+                -- setuping icons using this guide : https://www.xaprb.com/blog/2006/04/24/beautiful-x11-cursors/
+                >> catchIO (
+                             getEnv "HOME" >>= \homePath
+                                               ->  withCurrentDirectory  (homePath ++ "/.xmonad/res/icons")
+                                                     (createDir (homePath ++ "/.icons" ) >>= \createdDestDir
+                                                       ->copyDirectory (homePath ++ "/.xmonad/res/icons") createdDestDir ))
+
+
+                -- >> setDefaultCursor xC_pirate
+                -- todo it don't work for now but fix it
                 -- >> spawn "killall blueman-applet && blueman-applet"
 
 -- the main function.
@@ -187,6 +205,14 @@ manageScratchPad = scratchpadManageHook (W.RationalRect l t w h)
     w = 1       -- terminal width, 100%
     t = 1 - h   -- distance from top edge, 90%
     l = 1 - w   -- distance from left edge, 0%
+
+createDir :: String -> IO String
+createDir dirToCreate = do
+                 (createDirectoryIfMissing True dirToCreate)
+                 return dirToCreate
+
+copyDirectory :: FilePath -> FilePath -> IO ()
+copyDirectory source target = getDirectory source >>= copyTo_ target
 
 
 tiled :: Tall a
