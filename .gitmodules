@@ -7,3 +7,9 @@
 [submodule "xmonad-contrib-git"]
 	path = xmonad-contrib-git
 	url = ./xmonad-contrib-git/
+[submodule "lib/--help"]
+	path = lib/--help
+	url = https://github.com/kallisti-dev/filesystem-trees.git
+[submodule "xmonad-config"]
+	path = xmonad-config
+	url = https://github.com/vicfryzel/xmonad-config.git
