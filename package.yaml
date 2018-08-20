@@ -19,7 +19,8 @@ dependencies:
   - text
   - xmonad >=0.14
   - xmonad-contrib >=0.14
-  # - intero
+  - filesystem-trees
+  - directory >= 1.3
 
 ghc-options: -Wall
 
