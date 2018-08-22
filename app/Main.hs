@@ -97,10 +97,12 @@ myStartupHook = setWMName "LG3D"
                 >> spawn "systemctl --user daemon-reload && sleep 1 systemctl --user start emacs"
                 -- setuping icons using this guide : https://www.xaprb.com/blog/2006/04/24/beautiful-x11-cursors/
                 >> catchIO (
-                             getEnv "HOME" >>= \homePath
-                                               ->  withCurrentDirectory  (homePath ++ "/.xmonad/res/icons")
-                                                     (createDir (homePath ++ "/.icons" ) >>= \createdDestDir
-                                                       ->copyDirectory (homePath ++ "/.xmonad/res/icons") createdDestDir ))
+                             getEnv "HOME"
+                             >>= \homePath
+                                 ->  withCurrentDirectory  (homePath ++ "/.xmonad/res/icons")
+                                     $ createDir (homePath ++ "/.icons" )
+                                     >>= copyDirectory (homePath ++ "/.xmonad/res/icons")
+                           )
 
 
                 -- >> setDefaultCursor xC_pirate
@@ -208,7 +210,7 @@ manageScratchPad = scratchpadManageHook (W.RationalRect l t w h)
 
 createDir :: String -> IO String
 createDir dirToCreate = do
-                 (createDirectoryIfMissing True dirToCreate)
+                 createDirectoryIfMissing True dirToCreate
                  return dirToCreate
 
 copyDirectory :: FilePath -> FilePath -> IO ()
