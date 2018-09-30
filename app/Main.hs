@@ -248,6 +248,8 @@ myConfig =  def {
   } `additionalKeysP`
         [ ("<XF86AudioRaiseVolume>", spawn "amixer -D pulse sset Master 5%+")   -- volume up
         , ("<XF86AudioLowerVolume>", spawn "amixer -D pulse sset Master 5%-") -- volume down
+        , ("<XF86MonBrightnessUp>", spawn "xbacklight -inc 10")
+        , ("<XF86MonBrightnessDown>", spawn "xbacklight -dec 10")
         , ("<XF86AudioMute>"       , spawn "amixer -D pulse sset Master toggle") -- mute
         , ( "<XF86AudioPlay>"
           , spawn $
