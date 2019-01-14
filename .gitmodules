@@ -13,3 +13,6 @@
 [submodule "xmonad-config"]
 	path = xmonad-config
 	url = https://github.com/vicfryzel/xmonad-config.git
+[submodule "filesystem-trees"]
+	path = filesystem-trees
+	url = ./filesystem-trees
