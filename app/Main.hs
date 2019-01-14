@@ -268,7 +268,7 @@ myConfig =  def {
         ]
    `additionalKeys`
         [ ((controlMask .|. altMask, xK_l), spawn "env XSECURELOCK_SAVER=saver_mpv xsecurelock || slock")                             -- lock screen
-        , ((controlMask, xK_Print)        , spawn "sleep 0.2; cd Pictures/scrot; scrot -s")               -- screenshot
+        , ((controlMask, xK_Print)        , spawn "sleep 0.2; cd Pictures/scrot; scrot -s")               -- screenshot1
         , ((0, xK_Print)                  , spawn "cd Pictures/scrot; scrot")                             -- screenshot
         , ((mod4Mask, xK_p)               , spawn "rofi -dpi 200 -show run")                         -- dmenu9
         , ((altMask, xK_Shift_L)          , spawn "/home/mikefaille/bin/layout-switch.sh") -- chan9ge layout
