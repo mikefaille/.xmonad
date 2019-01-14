@@ -15,7 +15,6 @@
 import qualified Data.Map        as M()
 import Data.Ratio()
 
-
 import System.Directory
 
 
@@ -24,7 +23,7 @@ import XMonad.Hooks.DynamicLog
 
 import XMonad
 
-import XMonad.Hooks.ManageDocks
+import XMonad.Hooks.ManageDocks (manageDocks, avoidStruts)
 
 
 import XMonad.Util.EZConfig        -- append key/mouse bindings
@@ -81,7 +80,7 @@ myStartupHook = setWMName "LG3D"
                 >> spawn "setxkbmap ca multi"
                 >> spawn "xset s blank && xset s 180 && xset dpms 0 360 420" -- Set screen blank after 3 min, turn off after 6 min. and suspend after 7 min.
                 -- >> createDir
-                >> spawn "xrdb -merge ~/.Xresources" -- load .Xresources. I mainly want solarized dark as solarized theme.
+                >> spawn "xrdb -merge ~/.Xresources" -- load .Xresources. I mainly want solarized dark as solarized theme.
                 >> spawn "fcitx-autostart"
                 >> spawn "nm-applet"
                 >> spawn "xsetroot -xcf ~/.xmonad/res/icons/DMZ-Black/cusrors/left_ptr 200"
@@ -131,7 +130,6 @@ myXmobarPP  = xmobarPP {
                , ppSort    = fmap
                                (namedScratchpadFilterOutWorkspace.)
                                (ppSort defaultPP)
-
                }
 
 
@@ -177,9 +175,9 @@ myManageHook = composeAll
 
 ---- Scratchpad ----
 -- src: https://github.com/altercation/es-etc/blob/master/xorg/.xmonad/xmonad.hs
+toggleSP = namedScratchpadAction myScratchpads
 
-toggleSP sp = namedScratchpadAction myScratchpads sp
-
+myScratchpads :: [NamedScratchpad]
 myScratchpads =
     [
       NS "spotify"      "spotify" (className =? "Spotify") centWinVBig
@@ -187,13 +185,13 @@ myScratchpads =
 
     ] where
         -- order of ratios: left-margin top-margin width height
-        centWin     = (customFloating $ W.RationalRect (1/6) (1/6) (2/3) (2/3))
-        centWinBig  = (customFloating $ W.RationalRect (1/8) (1/8) (3/4) (3/4))
-        centWinVBig = (customFloating $ W.RationalRect (1/40) (1/20) (19/20) (9/10))
-        centWinMax  = (customFloating $ W.RationalRect (0/1) (0/1) (1/1) (1/1))
-        centWinThin = (customFloating $ W.RationalRect (1/30) (1/4) (28/30) (1/2))
-        centSquare  = (customFloating $ W.RationalRect (1/3) (1/4) (1/3) (1/2))
-        lowerThird  = (customFloating $ W.RationalRect (0) (2/3) (1) (1/3))
+        centWin     = customFloating $ W.RationalRect (1/6) (1/6) (2/3) (2/3)
+        centWinBig  = customFloating $ W.RationalRect (1/8) (1/8) (3/4) (3/4)
+        centWinVBig = customFloating $ W.RationalRect (1/40) (1/20) (19/20) (9/10)
+        centWinMax  = customFloating $ W.RationalRect (0/1) (0/1) (1/1) (1/1)
+        centWinThin = customFloating $ W.RationalRect (1/30) (1/4) (28/30) (1/2)
+        centSquare  = customFloating $ W.RationalRect (1/3) (1/4) (1/3) (1/2)
+        lowerThird  = customFloating $ W.RationalRect (0) (2/3) (1) (1/3)
 
 
 -- then define your scratchpad management separately:
@@ -227,7 +225,7 @@ myConfig =  def {
     , layoutHook = smartBorders $
                    lessBorders OnlyScreenFloat  $
                    avoidStruts $
-                 magnifiercz 1.3  (Mirror tiled)
+                   magnifiercz 1.3  (Mirror tiled)
                  -- ||| Mirror (Tall 1 (3/100) (1/2))
                  ||| magnifiercz 1.3 (Tall 1 (3/100) (1/2))
                  ||| Full
