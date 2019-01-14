@@ -169,8 +169,8 @@ myManageHook = composeAll
     , className =? "qemu-system-x86_64" --> doShift "6:vm"
     , className =? "Xchat"          --> doShift "5:media"
     , className =? "stalonetray"    --> doIgnore
-    , className =? "Spotify"        --> doShift "5:media"
-    , title =? "Spotify"        --> doShift "5:media"
+    -- , className =? "Spotify"        --> doShift "5:media"
+    -- , title =? "Spotify"        --> doShift "5:media"
     , isFullscreen --> (doF W.focusDown <+> doFullFloat)]
     <+> manageScratchPad
     <+> namedScratchpadManageHook myScratchpads
