@@ -63,7 +63,6 @@ import           XMonad.Util.NamedScratchpad                    -- summon/dismis
 import System.Environment
 import System.File.Tree (getDirectory, copyTo_)
 
-import XMonad.Util.Cursor -- configure cursor on startuphook
 
 data LibNotifyUrgencyHook = LibNotifyUrgencyHook deriving (Read, Show)
 instance UrgencyHook LibNotifyUrgencyHook where
@@ -84,7 +83,7 @@ myStartupHook = setWMName "LG3D"
                 >> spawn "xrdb -merge ~/.Xresources" -- load .Xresources. I mainly want solarized dark as solarized theme.
                 >> spawn "fcitx-autostart"
                 >> spawn "nm-applet"
-                >> spawn "xsetroot -xcf ~/.xmonad/res/icons/DMZ-Black/cursors/left_ptr 200"
+                >> spawn "xsetroot -xcf ~/.xmonad/res/icons/DMZ-Black/cusrors/left_ptr 200"
                 >> spawn "xrandr --dpi 221"
                 >> spawn "xrandr --output DP-0 --scale 1x1"
                 >> spawn "xinput --set-prop 'SynPS/2 Synaptics TouchPad' 'libinput Natural Scrolling Enabled' '1'"
@@ -104,8 +103,6 @@ myStartupHook = setWMName "LG3D"
                                      >>= copyDirectory (homePath ++ "/.xmonad/res/icons")
                            )
 
-
-                -- >> setDefaultCursor xC_pirate
                 -- todo it don't work for now but fix it
                 -- >> spawn "killall blueman-applet && blueman-applet"
 
